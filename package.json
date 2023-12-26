@@ -1,0 +1,29 @@
+{
+  "name": "hyprland-node",
+  "version": "0.1.0",
+  "description": "Hypland IPC wrapper for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "tsc --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luckasRanarison/hyprland-node.git"
+  },
+  "keywords": [
+    "hyprland",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "LIOKA Ranarison Fiderana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luckasRanarison/hyprland-node/issues"
+  },
+  "homepage": "https://github.com/luckasRanarison/hyprland-node#readme",
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3"
+  }
+}
