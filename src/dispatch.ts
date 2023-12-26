@@ -1,4 +1,4 @@
-import { send } from "./command";
+import { writeToSocket } from "./socket";
 
 export type Workspace = "string" | number;
 
@@ -13,10 +13,10 @@ export type ResizeParams = {
 };
 
 async function dispatch(dispatcher: string, parameter: string = "") {
-  const res = await send(`/dispatch ${dispatcher} ${parameter}`);
+  const res = await writeToSocket(`/dispatch ${dispatcher} ${parameter}`);
 
   if (res !== "ok") {
-    throw new Error(`Failed to dispatch "${dispatcher}"`);
+    throw new Error(`Failed to dispatch "${dispatcher}": ${res}`);
   }
 }
 
@@ -228,11 +228,18 @@ export function toggleOpaque() {
   return dispatch("toggleopaque");
 }
 
+export enum Corner {
+  BottomLeft,
+  BottomRight,
+  TopRight,
+  TopLeft,
+}
+
 /**
  * Moves the cursor to the corner of the active window
  * @param position bottom left - 0, bottom right - 1, top right - 2, top left - 3
  */
-export function moveCursorToCorner(position: 0 | 1 | 2 | 3) {
+export function moveCursorToCorner(position: Corner) {
   return dispatch("movecursortocorner", position.toString());
 }
 
