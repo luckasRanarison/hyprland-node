@@ -39,14 +39,14 @@ export function switchXkbLayout(device: string, direction: "next" | "prev") {
  * Sets the hyprctl error string. Will reset when Hyprland’s config is reloaded
  */
 export function setError(color: string, message: string) {
-  return writeToSocket(`/seterror "${color}" "${message}"`);
+  return writeToSocket(`/seterror ${color} ${message}`);
 }
 
 /**
  * Disables the hyprctl error string. Will reset when Hyprland’s config is reloaded
  */
 export function disableError(message: string) {
-  return writeToSocket(`/seterror disable "${message}"`);
+  return writeToSocket(`/seterror disable ${message}`);
 }
 
 export enum Icon {
@@ -68,7 +68,7 @@ export function notify(
   color: string,
   message: string
 ) {
-  return writeToSocket(`/notify ${icon} ${timeout} "${color}" "${message}"`);
+  return writeToSocket(`/notify ${icon} ${timeout} ${color} ${message}`);
 }
 
 type PropValue = {
@@ -103,5 +103,7 @@ export function setProp<T extends keyof PropValue>(
 ) {
   const str =
     typeof value === "boolean" ? (value ? "1" : "0") : value.toString();
-  return writeToSocket(`/setprop ${address} ${name} ${str} ${lock && "lock"}`);
+  return writeToSocket(
+    `/setprop address:${address} ${name} ${str} ${lock && "lock"}`
+  );
 }
