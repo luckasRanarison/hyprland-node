@@ -63,7 +63,7 @@ class EventListener {
   }
 
   /**
-   * Connects to the socket and listen to incomming events
+   * Listen to incomming events through UNIX socket
    */
   listen(callback?: () => void) {
     const { HYPRLAND_INSTANCE_SIGNATURE } = env;

@@ -1,4 +1,4 @@
-import { writeToSocket } from "./socket";
+import { sendCommand } from "./socket";
 
 export type Workspace = "string" | number;
 
@@ -13,11 +13,7 @@ export type ResizeParams = {
 };
 
 async function dispatch(dispatcher: string, parameter: string = "") {
-  const res = await writeToSocket(`/dispatch ${dispatcher} ${parameter}`);
-
-  if (res !== "ok") {
-    throw new Error(`Failed to dispatch "${dispatcher}": ${res}`);
-  }
+  return sendCommand(`dispatch ${dispatcher} ${parameter}`);
 }
 
 function isDirection(s: string) {
@@ -384,7 +380,7 @@ export function moveWindowOrGroup(direction: "backward" | "forward") {
 }
 
 /**
- * Prohibit the active window from becoming or being inserted into group
+ * Prohibits the active window from becoming or being inserted into group
  */
 export function denyWindowFromGroup(status: Status) {
   return dispatch("denywindowfromgroup", status);
@@ -406,7 +402,7 @@ export function global(name: string) {
 }
 
 /**
- * Change the current mapping group
+ * Changes the current mapping group
  * @see https://wiki.hyprland.org/Configuring/Binds/#submaps
  */
 export function submap(name: "reset" | string) {

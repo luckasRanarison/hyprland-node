@@ -1,52 +1,52 @@
-import { writeToSocket } from "./socket";
+import { sendCommand } from "./socket";
 
 /**
  * Issues a reload to force reload the config
  */
 export function reload() {
-  return writeToSocket("/reload");
+  return sendCommand("reload");
 }
 
 /**
  * Issues a kill to get into a kill mode, where you can kill an app by clicking on it.
  */
 export function kill() {
-  return writeToSocket("/kill");
+  return sendCommand("kill");
 }
 
 /**
  * Sets the cursor theme and reloads the cursor manager. Will set the theme for everything except GTK
  */
 export function setCursor(theme: string, size: number) {
-  return writeToSocket(`/setcursor ${theme} ${size}`);
+  return sendCommand(`setcursor ${theme} ${size}`);
 }
 
 /**
  * Allows you to add and remove fake outputs to your preferred backend
  */
 export function output(action: "create" | "remove", backend: string) {
-  return writeToSocket(`/output ${action} ${backend}`);
+  return sendCommand(`output ${action} ${backend}`);
 }
 
 /**
  * Sets the xkb layout index for a keyboard
  */
 export function switchXkbLayout(device: string, direction: "next" | "prev") {
-  return writeToSocket(`/switchxkblayout ${device} ${direction}`);
+  return sendCommand(`switchxkblayout ${device} ${direction}`);
 }
 
 /**
  * Sets the hyprctl error string. Will reset when Hyprland’s config is reloaded
  */
 export function setError(color: string, message: string) {
-  return writeToSocket(`/seterror ${color} ${message}`);
+  return sendCommand(`seterror ${color} ${message}`);
 }
 
 /**
  * Disables the hyprctl error string. Will reset when Hyprland’s config is reloaded
  */
 export function disableError(message: string) {
-  return writeToSocket(`/seterror disable ${message}`);
+  return sendCommand(`seterror disable ${message}`);
 }
 
 export enum Icon {
@@ -68,7 +68,7 @@ export function notify(
   color: string,
   message: string
 ) {
-  return writeToSocket(`/notify ${icon} ${timeout} ${color} ${message}`);
+  return sendCommand(`notify ${icon} ${timeout} ${color} ${message}`);
 }
 
 type PropValue = {
@@ -103,7 +103,7 @@ export function setProp<T extends keyof PropValue>(
 ) {
   const str =
     typeof value === "boolean" ? (value ? "1" : "0") : value.toString();
-  return writeToSocket(
-    `/setprop address:${address} ${name} ${str} ${lock && "lock"}`
+  return sendCommand(
+    `setprop address:${address} ${name} ${str} ${lock && "lock"}`
   );
 }
